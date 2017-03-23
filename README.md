@@ -16,9 +16,6 @@ import "github.com/aerth/playwav/cmd/playwav"
 // from file
 playwav.FromFile("example.wav")
 
-// from bytes
-playwav.FromBytes(b)
-
 ```
 
 ## cool test with playwav command
