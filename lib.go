@@ -30,36 +30,36 @@ import (
 
 	"github.com/cocoonlife/goalsa"
 	"github.com/cryptix/wav"
-	"github.com/fatih/color"
+
 )
 
-func FromFile(filename string) error {
+func FromFile(filename string) (wavinfo string, err error) {
 
 	// file exists
 	soundfile, err := os.Open(filename)
 	if err != nil {
-		return errors.New(fmt.Sprint("open:", err))
+		return "", errors.New(fmt.Sprint("open:", err))
 	}
 
 	// stat for size
 	sndfileinfo, err := os.Stat(soundfile.Name())
 	if err != nil {
-		return errors.New(fmt.Sprint("stat:", err))
+		return "", errors.New(fmt.Sprint("stat:", err))
 	}
 
 	// wavReader
 	wavReader, err := wav.NewReader(soundfile, sndfileinfo.Size())
 	if err != nil {
-		return errors.New(fmt.Sprint("WAV reader:", err))
+		return "", errors.New(fmt.Sprint("WAV reader:", err))
 	}
 
 	// require wavReader
 	if wavReader == nil {
-		return errors.New("nil wav reader")
+		return "", errors.New("nil wav reader")
 	}
 
 	// print .WAV info
-	color.Cyan(wavReader.String())
+	wavinfo = wavReader.String()
 
 	// open default ALSA playback device
 	samplerate := int(wavReader.GetSampleCount())
@@ -72,12 +72,12 @@ func FromFile(filename string) error {
 	fmt.Println(samplerate)
 	out, err := alsa.NewPlaybackDevice("default", 1, alsa.FormatS16LE, samplerate, alsa.BufferParams{})
 	if err != nil {
-		return errors.New(fmt.Sprint("alsa:", err))
+		return wavinfo, errors.New(fmt.Sprint("alsa:", err))
 	}
 
 	// require ALSA device
 	if out == nil {
-		return errors.New("nil ALSA device")
+		return wavinfo, errors.New("nil ALSA device")
 	}
 
 	// close device when finished
@@ -98,10 +98,10 @@ func FromFile(filename string) error {
 		if err == io.EOF {
 			break
 		} else if err != nil {
-			return errors.New(fmt.Sprint("WAV Decode:", err))
+			return wavinfo, errors.New(fmt.Sprint("WAV Decode:", err))
 		}
 	}
 
 	// all done
-	return nil
+	return wavinfo, nil
 }
