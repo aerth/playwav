@@ -26,20 +26,19 @@ import (
 	"os"
 
 	"github.com/aerth/playwav"
-	"github.com/fatih/color"
 )
 
 func main() {
 	if len(os.Args) < 2 {
-		color.Red("What .WAV file to play?")
+		print("What .WAV file to play?\n")
 		return
 	}
 
 	for _, filename := range os.Args[1:] {
-		color.Green(filename)
+		print(filename + "\n")
 		err := playwav.FromFile(filename)
 		if err != nil {
-			color.Red(err.Error())
+			print(err.Error() + "\n")
 		}
 	}
 }

@@ -11,7 +11,7 @@
 ## playwav library
 
 ```
-import "github.com/aerth/playwav/cmd/playwav"
+import "github.com/aerth/playwav"
 
 // from file
 playwav.FromFile("example.wav")
