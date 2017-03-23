@@ -17,7 +17,7 @@ build:
 	@echo 'Building ${NAME} version ${RELEASE}'
 
 	go get -d -x -v .
-	go build -o ${NAME} -x --ldflags "-s -X main.version=${RELEASE}" .
+	go build -o ${NAME} -x --ldflags "-s -X main.version=${RELEASE}" ./cmd/playwav/
 	@echo 'Successfully built ${NAME}'
 
 

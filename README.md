@@ -1,8 +1,33 @@
 # playwav
 
-compilation requires CGO and some c libraries (ALSA)
+## play a .wav file
 
-## output of ldd:
+  * stuck with FormatS16LE for now (Little Endian 16, 2 bytes per sample)
+  * compilation adds requirements: CGO and some c libraries (ALSA)
+
+## playwav command
+  ```go get -v github.com/aerth/playwav/cmd/playwav```
+
+## playwav library
+
+```
+import "github.com/aerth/playwav/cmd/playwav"
+
+// from file
+playwav.FromFile("example.wav")
+
+// from bytes
+playwav.FromBytes(b)
+
+```
+
+## cool test with playwav command
+
+```
+for i in $(find /usr/ -name '*.wav'); do ./playwav $i; done
+```
+
+## output of ldd for playwav command:
 
 ```
     linux-vdso.so.1 (0x00007fff27fcf000)
