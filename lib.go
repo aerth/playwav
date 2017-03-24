@@ -60,9 +60,9 @@ func FromFile(filename string) (wavinfo string, err error) {
 
 	// print .WAV info
 	wavinfo = wavReader.String()
-
+	fileinfo := wavReader.GetFile()
 	// open default ALSA playback device
-	samplerate := int(wavReader.GetSampleCount())
+	samplerate := int(fileinfo.SampleRate)
 	if samplerate == 0 {
 		samplerate = 44100
 	}
