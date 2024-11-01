@@ -7,6 +7,12 @@
 
 ## playwav command
   ```go get -v github.com/aerth/playwav/cmd/playwav```
+  
+if not build because cant found 'alsa/a ... .h" 
+try it:
+```
+sudo apt-get install libasound2-dev
+```
 
 ## playwav library
 
